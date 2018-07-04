@@ -1,19 +1,27 @@
 <template>
-  <section>
-    <quill-editor
-      v-model="content"
-      ref="myQuillEditor"
-      :options="editorOption"
-      @blur="onEditorBlur($event)"
-      @focus="onEditorFocus($event)"
-      @ready="onEditorReady($event)"
-      @change="onEditorChange($event)"></quill-editor>
-  </section>
+  <el-container>
+    <el-aside width="300px">
+      <note-list/>
+    </el-aside>
+    <el-main>
+      <quill-editor
+        v-model="content"
+        ref="myQuillEditor"
+        :options="editorOption"
+        @blur="onEditorBlur($event)"
+        @focus="onEditorFocus($event)"
+        @ready="onEditorReady($event)"
+        @change="onEditorChange($event)"></quill-editor>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
+  import NoteList from './NoteList'
+
   export default {
-    name: "Editor",
+    name: "Note",
+    components: {NoteList},
     data() {
       return {
         content: '<h2>I am Example</h2>',

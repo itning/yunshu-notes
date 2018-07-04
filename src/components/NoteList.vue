@@ -1,8 +1,8 @@
 <template>
   <section>
-    <el-card style="margin-bottom: 5px" shadow="hover">
+    <el-card shadow="hover">
       <div>
-        <a href="">
+        <a href="#">
           <h1>笔记标题笔记标题</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
@@ -11,9 +11,9 @@
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
       </div>
     </el-card>
-    <el-card style="margin-bottom: 5px" shadow="hover">
+    <el-card shadow="hover">
       <div>
-        <a href="">
+        <a href="#">
           <h1>笔记标题笔记标题</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
@@ -22,9 +22,9 @@
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
       </div>
     </el-card>
-    <el-card style="margin-bottom: 5px" shadow="hover">
+    <el-card shadow="hover">
       <div>
-        <a href="">
+        <a href="#">
           <h1>笔记标题笔记标题</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
@@ -33,9 +33,9 @@
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
       </div>
     </el-card>
-    <el-card style="margin-bottom: 5px" shadow="hover">
+    <el-card shadow="hover">
       <div>
-        <a href="">
+        <a href="#">
           <h1>笔记标题笔记标题</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
@@ -44,9 +44,9 @@
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
       </div>
     </el-card>
-    <el-card style="margin-bottom: 5px" shadow="hover">
+    <el-card shadow="hover">
       <div>
-        <a href="">
+        <a href="#">
           <h1>笔记标题笔记标题</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
@@ -55,9 +55,9 @@
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
       </div>
     </el-card>
-    <el-card style="margin-bottom: 5px" shadow="hover">
+    <el-card shadow="hover">
       <div>
-        <a href="">
+        <a href="#">
           <h1>笔记标题笔记标题</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
@@ -66,9 +66,20 @@
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
       </div>
     </el-card>
-    <el-card style="margin-bottom: 5px" shadow="hover">
+    <el-card shadow="hover">
       <div>
-        <a href="">
+        <a href="#">
+          <h1>笔记标题笔记标题</h1>
+          <h5>创建时间:2016-01-02 18:35:42</h5>
+          <h5>修改时间:2016-01-02 18:35:42</h5>
+        </a>
+        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
+        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
+      </div>
+    </el-card>
+    <el-card shadow="hover">
+      <div>
+        <a href="#">
           <h1>笔记标题笔记标题</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
@@ -87,8 +98,26 @@
 </script>
 
 <style scoped>
+  h1 {
+    font-size: 18px;
+    margin: 5px 0 15px 0;
+  }
+
+  h5 {
+    font-size: 12px;
+    margin: 5px 0 0 0;
+  }
+
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  .el-button {
+    margin-top: 10px;
+  }
+
+  .el-card {
+    margin-bottom: 5px;
   }
 </style>

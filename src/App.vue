@@ -5,15 +5,8 @@
         <tool-bar/>
       </el-header>
       <el-container>
-        <el-aside width="200px">
-          <side-bar/>
-        </el-aside>
-        <el-aside width="300px">
-          <note-list/>
-        </el-aside>
-        <el-main>
-          <router-view/>
-        </el-main>
+        <side-bar/>
+        <router-view/>
       </el-container>
     </el-container>
   </section>
@@ -21,12 +14,11 @@
 
 <script>
   import ToolBar from './components/ToolBar'
-  import NoteList from './components/NoteList'
   import SideBar from './components/SideBar'
 
   export default {
     name: 'App',
-    components: {ToolBar, NoteList, SideBar},
+    components: {ToolBar, SideBar},
     data() {
       return {
         clientHeight: '600px'

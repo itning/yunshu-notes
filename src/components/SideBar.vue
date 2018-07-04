@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <el-aside width="200px">
     <el-menu :default-openeds="['1']">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-document"></i>&nbsp;笔记本</template>
@@ -24,7 +24,7 @@
         <span slot="title">废纸篓</span>
       </el-menu-item>
     </el-menu>
-  </section>
+  </el-aside>
 </template>
 
 <script>
