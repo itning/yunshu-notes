@@ -15,10 +15,12 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-edit"></i>
-        <span slot="title">新建笔记</span>
-      </el-menu-item>
+      <router-link to="/new_note">
+        <el-menu-item index="2">
+          <i class="el-icon-edit"></i>
+          <span slot="title">新建笔记</span>
+        </el-menu-item>
+      </router-link>
       <el-menu-item index="3">
         <i class="el-icon-delete"></i>
         <span slot="title">废纸篓</span>

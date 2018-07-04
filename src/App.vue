@@ -36,6 +36,11 @@
 </script>
 
 <style>
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   .el-header {
     background-color: #398dee;
     text-align: left;

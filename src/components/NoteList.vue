@@ -108,11 +108,6 @@
     margin: 5px 0 0 0;
   }
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
   .el-button {
     margin-top: 10px;
   }

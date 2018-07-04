@@ -9,7 +9,7 @@
         <el-dropdown-item>注销登陆</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-    <el-input class="search_input" placeholder="搜索..." prefix-icon="el-icon-search" v-model="search_key" clearable>
+    <el-input class="search_input" placeholder="搜索笔记..." prefix-icon="el-icon-search" v-model="search_key" clearable>
     </el-input>
   </section>
 </template>
