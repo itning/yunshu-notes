@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section>
     <el-container :style="{ height: clientHeight, border: '1px solid #eee' }">
       <el-header>
         <tool-bar/>
@@ -16,7 +16,7 @@
         </el-main>
       </el-container>
     </el-container>
-  </div>
+  </section>
 </template>
 
 <script>
