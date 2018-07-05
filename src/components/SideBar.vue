@@ -1,6 +1,6 @@
 <template>
   <el-aside width="200px">
-    <el-menu :default-openeds="['1']">
+    <el-menu :default-openeds="['1']" :default-active="active">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-document"></i>&nbsp;笔记本</template>
         <el-menu-item-group>
@@ -16,7 +16,7 @@
         </el-menu-item-group>
       </el-submenu>
       <router-link to="/new_note">
-        <el-menu-item index="2">
+        <el-menu-item index="/new_note">
           <i class="el-icon-edit"></i>
           <span slot="title">新建笔记</span>
         </el-menu-item>
@@ -31,7 +31,15 @@
 
 <script>
   export default {
-    name: "SideBar"
+    name: "SideBar",
+    data() {
+      return {
+        active: ''
+      }
+    },
+    mounted() {
+      this.active = this.$route.path;
+    }
   }
 </script>
 

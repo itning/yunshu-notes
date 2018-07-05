@@ -5,7 +5,7 @@
         <el-input placeholder="在这里输入笔记的标题..." v-model="aa" style="margin-top: 8px;width: 79%;">
           <template slot="prepend">标题:</template>
         </el-input>
-        <el-select v-model="aa" placeholder="选择笔记本">
+        <el-select v-model="aa" placeholder="选择笔记本" style="width: 20%">
           <el-option label="笔记本A" value="shanghai"></el-option>
           <el-option label="笔记本B" value="beijing"></el-option>
         </el-select>
