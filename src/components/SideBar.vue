@@ -1,5 +1,5 @@
 <template>
-  <el-aside width="200px">
+  <el-aside width="200px" v-if="show">
     <el-menu :default-openeds="['1']" :default-active="active">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-document"></i>&nbsp;笔记本</template>
@@ -34,11 +34,13 @@
     name: "SideBar",
     data() {
       return {
-        active: ''
+        active: '',
+        show: true
       }
     },
     mounted() {
       this.active = this.$route.path;
+      this.$route.path === '/login' ? this.show = false : this.show = true;
     }
   }
 </script>

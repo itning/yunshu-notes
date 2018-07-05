@@ -6,7 +6,7 @@
       </el-header>
       <el-container>
         <side-bar/>
-        <router-view/>
+        <router-view :clientHeight="clientHeight"/>
       </el-container>
     </el-container>
   </section>

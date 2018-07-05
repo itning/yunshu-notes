@@ -2,14 +2,15 @@
   <section>
     <img src="../assets/logo_w_small.png" alt="logo" class="logo_img">
     <!--下拉菜单-->
-    <el-dropdown>
-      <span class="logo_info">舒露 已登陆</span>
+    <el-dropdown v-if="show">
+      <span class="logo_info">{{login_info}}</span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>修改密码</el-dropdown-item>
         <el-dropdown-item>注销登陆</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
-    <el-input class="search_input" placeholder="搜索笔记..." prefix-icon="el-icon-search" v-model="search_key" clearable>
+    <el-input v-if="show" class="search_input" placeholder="搜索笔记..." prefix-icon="el-icon-search" v-model="search_key"
+              clearable>
     </el-input>
   </section>
 </template>
@@ -19,9 +20,14 @@
     name: "ToolBar",
     data() {
       return {
-        search_key: ''
+        search_key: '',
+        login_info: '舒露 已登陆',
+        show: true
       }
     },
+    mounted() {
+      this.$route.path === '/login' ? this.show = false : this.show = true;
+    }
   }
 </script>
 
