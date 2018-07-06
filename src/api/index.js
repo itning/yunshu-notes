@@ -9,3 +9,13 @@ export function NOTE_BOOK() {
     "newNoteBook": BASE_URL + '/note_books'
   }
 }
+
+export function NOTE() {
+  return {
+    "getNote": BASE_URL + '/note/',
+    "delNote": BASE_URL + '/note/',
+    "upNote": BASE_URL + '/note/',
+    "newNote": BASE_URL + '/notes'
+  }
+}
+

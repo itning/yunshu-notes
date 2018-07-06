@@ -1,11 +1,11 @@
 <template>
-  <section>
+  <section v-loading="loading" style="min-height: 100px">
     <el-card v-for="note in notes" :key="note.id" shadow="hover">
       <div>
         <a href="#">
           <h1>{{note.title}}</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
+          <h5>创建时间:{{note.gmtCreate}}</h5>
+          <h5>修改时间:{{note.gmtModified}}</h5>
         </a>
         <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
@@ -16,17 +16,47 @@
 
 <script>
   import bus from '../assets/eventBus';
+  import dayjs from 'dayjs'
+  import {NOTE} from "../api";
 
   export default {
     name: "NoteList",
     data() {
       return {
-        notes: []
+        notes: [],
+        loading: true
+      }
+    },
+    methods: {
+      getNote(id) {
+        this.loading = true;
+        this.$axios.get(NOTE().getNote + id).then(resp => {
+          resp.data.map(note => {
+            note.gmtCreate = dayjs(note.gmtCreate).format("YYYY年MM月DD日 HH:mm:ss");
+            note.gmtModified = dayjs(note.gmtModified).format("YYYY年MM月DD日 HH:mm:ss");
+            return note;
+          });
+          this.notes = resp.data;
+        }).catch(error => {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            duration: 0,
+            message: '获取笔记信息失败!'
+          });
+        }).then(() => {
+          this.loading = false;
+        });
       }
     },
     mounted() {
+      const that = this;
       bus.$on("noteId", function (data) {
-        console.log("on-->" + data);
+        if (data === 0) {
+          that.loading = false;
+        } else {
+          that.getNote(data);
+        }
       })
     }
   }

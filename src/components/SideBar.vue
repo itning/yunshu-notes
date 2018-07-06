@@ -45,11 +45,14 @@
       }
     },
     methods: {
-      getNoteBookList() {
+      getNoteBookList(first = false) {
         this.loading = true;
         this.$axios.get(NOTE_BOOK().getNoteBook).then(resp => {
-          if (resp.status === 200) {
-            this.note_books = resp.data;
+          this.note_books = resp.data;
+          if (first && resp.data.length !== 0) {
+            this.setNote(resp.data[0].id);
+          } else {
+            this.setNote(0);
           }
         }).catch(error => {
           this.$message({
@@ -152,12 +155,11 @@
         });
       },
       setNote(id) {
-        console.log(id);
         bus.$emit('noteId', id);
       }
     },
     mounted() {
-      this.getNoteBookList();
+      this.getNoteBookList(true);
       this.active = this.$route.path === '/' ? "0" : this.$route.path;
       this.$route.path === '/login' ? this.show = false : this.show = true;
     }

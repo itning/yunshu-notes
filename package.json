@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.7.2",
     "element-ui": "^2.4.3",
     "vue": "^2.5.2",
     "vue-quill-editor": "^3.0.6",
