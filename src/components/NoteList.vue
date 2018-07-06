@@ -1,86 +1,9 @@
 <template>
   <section>
-    <el-card shadow="hover">
+    <el-card v-for="note in notes" :key="note.id" shadow="hover">
       <div>
         <a href="#">
-          <h1>笔记标题笔记标题</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
-        </a>
-        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </el-card>
-    <el-card shadow="hover">
-      <div>
-        <a href="#">
-          <h1>笔记标题笔记标题</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
-        </a>
-        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </el-card>
-    <el-card shadow="hover">
-      <div>
-        <a href="#">
-          <h1>笔记标题笔记标题</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
-        </a>
-        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </el-card>
-    <el-card shadow="hover">
-      <div>
-        <a href="#">
-          <h1>笔记标题笔记标题</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
-        </a>
-        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </el-card>
-    <el-card shadow="hover">
-      <div>
-        <a href="#">
-          <h1>笔记标题笔记标题</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
-        </a>
-        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </el-card>
-    <el-card shadow="hover">
-      <div>
-        <a href="#">
-          <h1>笔记标题笔记标题</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
-        </a>
-        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </el-card>
-    <el-card shadow="hover">
-      <div>
-        <a href="#">
-          <h1>笔记标题笔记标题</h1>
-          <h5>创建时间:2016-01-02 18:35:42</h5>
-          <h5>修改时间:2016-01-02 18:35:42</h5>
-        </a>
-        <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </el-card>
-    <el-card shadow="hover">
-      <div>
-        <a href="#">
-          <h1>笔记标题笔记标题</h1>
+          <h1>{{note.title}}</h1>
           <h5>创建时间:2016-01-02 18:35:42</h5>
           <h5>修改时间:2016-01-02 18:35:42</h5>
         </a>
@@ -92,8 +15,20 @@
 </template>
 
 <script>
+  import bus from '../assets/eventBus';
+
   export default {
-    name: "NoteList"
+    name: "NoteList",
+    data() {
+      return {
+        notes: []
+      }
+    },
+    mounted() {
+      bus.$on("noteId", function (data) {
+        console.log("on-->" + data);
+      })
+    }
   }
 </script>
 
