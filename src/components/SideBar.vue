@@ -18,6 +18,10 @@
           <span slot="title">新建笔记</span>
         </el-menu-item>
       </router-link>
+      <el-menu-item @click="newNoteBook" index="/new_note_book">
+        <i class="el-icon-plus"></i>
+        <span slot="title">新建笔记本</span>
+      </el-menu-item>
       <el-menu-item index="/trash">
         <i class="el-icon-delete"></i>
         <span slot="title">废纸篓</span>
@@ -94,7 +98,7 @@
             return n.id === id
           })[0].name
         }).then(({value}) => {
-          if (value !== '') {
+          if (value !== '' && value != null) {
             this.$axios.patch(NOTE_BOOK().upNoteBook + id + '/' + value).then(resp => {
               this.$message({
                 type: 'success',
@@ -106,6 +110,35 @@
                 type: 'error',
                 duration: 0,
                 message: '更新失败!'
+              });
+            }).then(() => {
+              this.getNoteBookList();
+            });
+          }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        });
+      },
+      newNoteBook() {
+        this.$prompt('请输入新的笔记本名称', '新增笔记本', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({value}) => {
+          if (value !== '' && value != null) {
+            this.$axios.post(NOTE_BOOK().newNoteBook, {name: value}).then(resp => {
+              this.$message({
+                type: 'success',
+                message: '添加成功!'
+              });
+            }).catch(error => {
+              this.$message({
+                showClose: true,
+                type: 'error',
+                duration: 0,
+                message: '添加失败!'
               });
             }).then(() => {
               this.getNoteBookList();
