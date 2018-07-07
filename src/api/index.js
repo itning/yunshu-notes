@@ -12,6 +12,7 @@ export function NOTE_BOOK() {
 
 export function NOTE() {
   return {
+    "getNotes": BASE_URL + '/notes/',
     "getNote": BASE_URL + '/note/',
     "delNote": BASE_URL + '/note/',
     "upNote": BASE_URL + '/note/',

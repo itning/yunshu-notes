@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container v-loading="loading">
     <el-aside width="300px">
       <note-list/>
     </el-aside>
@@ -17,13 +17,18 @@
 </template>
 
 <script>
+  import bus from '../assets/eventBus';
   import NoteList from './NoteList'
+  import {NOTE} from "../api";
 
   export default {
     name: "Note",
     components: {NoteList},
     data() {
       return {
+        contentChange: false,
+        note_id: '',
+        loading: true,
         content: '<h2>I am Example</h2>',
         editorOption: {
           // some quill options
@@ -32,7 +37,10 @@
     },
     methods: {
       onEditorBlur(quill) {
-        console.log('editor blur!', quill)
+        if (this.contentChange) {
+          this.contentChange = false;
+          this.upNote();
+        }
       },
       onEditorFocus(quill) {
         console.log('editor focus!', quill)
@@ -41,14 +49,53 @@
         console.log('editor ready!', quill)
       },
       onEditorChange({quill, html, text}) {
-        console.log('editor change!', quill, html, text);
+        this.contentChange = true;
         this.content = html
+      },
+      getNote() {
+        this.loading = true;
+        this.$axios.get(NOTE().getNote + this.note_id).then(resp => {
+          console.log(resp);
+          this.content = resp.data.content;
+        }).catch(error => {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            duration: 0,
+            message: '获取笔记信息失败!'
+          });
+        }).then(() => {
+          this.loading = false;
+        });
+      },
+      upNote() {
+        this.loading = true;
+        this.$axios.patch(NOTE().upNote + this.note_id, {content: this.content}).then(resp => {
+          this.getNote();
+        }).catch(error => {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            duration: 0,
+            message: '获取笔记信息失败!'
+          });
+        }).then(() => {
+          this.loading = false;
+        });
       }
     },
     computed: {
       editor() {
         return this.$refs.myQuillEditor.quill
       }
+    },
+    mounted() {
+      this.loading = false;
+      const that = this;
+      bus.$on('selectNote', function (id) {
+        that.note_id = id;
+        that.getNote();
+      })
     }
   }
 

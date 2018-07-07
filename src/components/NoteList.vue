@@ -2,7 +2,7 @@
   <section v-loading="loading" style="min-height: 100px">
     <el-card v-for="note in notes" :key="note.id" shadow="hover">
       <div>
-        <a href="#">
+        <a style="cursor: pointer" @click="getNote(note.id)">
           <h1>{{note.title}}</h1>
           <h5>创建时间:{{note.gmtCreate}}</h5>
           <h5>修改时间:{{note.gmtModified}}</h5>
@@ -28,9 +28,9 @@
       }
     },
     methods: {
-      getNote(id) {
+      getNoteList(id) {
         this.loading = true;
-        this.$axios.get(NOTE().getNote + id).then(resp => {
+        this.$axios.get(NOTE().getNotes + id).then(resp => {
           resp.data.map(note => {
             note.gmtCreate = dayjs(note.gmtCreate).format("YYYY年MM月DD日 HH:mm:ss");
             note.gmtModified = dayjs(note.gmtModified).format("YYYY年MM月DD日 HH:mm:ss");
@@ -47,6 +47,9 @@
         }).then(() => {
           this.loading = false;
         });
+      },
+      getNote(id) {
+        bus.$emit('selectNote', id);
       }
     },
     mounted() {
@@ -55,7 +58,8 @@
         if (data === 0) {
           that.loading = false;
         } else {
-          that.getNote(data);
+          that.getNoteList(data);
+
         }
       })
     }
