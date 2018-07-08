@@ -37,6 +37,7 @@
             return note;
           });
           this.notes = resp.data;
+          this.getNote(resp.data[0].id);
         }).catch(error => {
           this.$message({
             showClose: true,

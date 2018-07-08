@@ -29,7 +29,7 @@
         contentChange: false,
         note_id: '',
         loading: true,
-        content: '<h2>I am Example</h2>',
+        content: '加载中....',
         editorOption: {
           // some quill options
         }
@@ -90,7 +90,6 @@
       }
     },
     mounted() {
-      this.loading = false;
       const that = this;
       bus.$on('selectNote', function (id) {
         that.note_id = id;
