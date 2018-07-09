@@ -21,7 +21,6 @@
 
   export default {
     name: "NoteList",
-    props: ['id'],
     data() {
       return {
         notes: [],
@@ -61,7 +60,6 @@
           that.loading = false;
         } else {
           that.getNoteList(data);
-
         }
       })
     },

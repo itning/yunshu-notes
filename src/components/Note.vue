@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <note-list :id="id"/>
+    <note-list/>
     <editor/>
   </el-container>
 </template>
@@ -11,8 +11,7 @@
 
   export default {
     name: "Note",
-    components: {NoteList, Editor},
-    props: ['id'],
+    components: {NoteList, Editor}
   }
 
 </script>

@@ -11,10 +11,9 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/note/:id',
+      path: '/note',
       name: 'Note',
       component: Note,
-      props: true
     },
     {
       path: '/new_note',
@@ -34,7 +33,7 @@ export default new Router({
     },
     {
       path: '/*',
-      redirect: '/note/0'
+      redirect: '/note'
     }
   ]
 })

@@ -164,6 +164,7 @@
     },
     mounted() {
       this.getNoteBookList(true);
+      console.log(this.$route.params.id);
       //this.active = this.$route.path === '/' ? "0" : this.$route.path;
       this.active = "0";
       this.$route.path === '/login' ? this.show = false : this.show = true;
