@@ -55,7 +55,6 @@
       getNote() {
         this.loading = true;
         this.$axios.get(NOTE().getNote + this.note_id).then(resp => {
-          console.log(resp);
           this.content = resp.data.content;
         }).catch(error => {
           this.$message({

@@ -7,8 +7,8 @@
           <template slot="title"></template>
           <el-menu-item @click="setNote(n.id)" v-for="(n,index) in note_books" :key="n.id" :index="index.toString()">
             {{n.name}}
-            <a @click="delNoteBook(n.id)" style="float: right;"><i class="el-icon-delete"></i></a>
-            <a @click="upNoteBook(n.id)" style="float: right;"><i class="el-icon-edit"></i></a>
+            <a @click.stop="delNoteBook(n.id)" style="float: right;"><i class="el-icon-delete"></i></a>
+            <a @click.stop="upNoteBook(n.id)" style="float: right;"><i class="el-icon-edit"></i></a>
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
