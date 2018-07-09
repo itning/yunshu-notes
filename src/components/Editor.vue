@@ -1,13 +1,16 @@
 <template>
-  <el-main>
-    <quill-editor v-loading="loading"
-                  v-model="content"
-                  ref="myQuillEditor"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)"
-                  @change="onEditorChange($event)"></quill-editor>
+  <el-main v-loading="loading">
+    <el-input @change="onTitleChange($event)" style="margin-bottom: 8px" v-model="title" placeholder="标题">
+      <template slot="prepend">标题:</template>
+    </el-input>
+    <quill-editor
+      v-model="content"
+      ref="myQuillEditor"
+      :options="editorOption"
+      @blur="onEditorBlur($event)"
+      @focus="onEditorFocus($event)"
+      @ready="onEditorReady($event)"
+      @change="onEditorChange($event)"></quill-editor>
   </el-main>
 </template>
 
@@ -20,6 +23,7 @@
     data() {
       return {
         contentChange: false,
+        title: '',
         note_id: '',
         loading: true,
         content: '加载中....',
@@ -45,9 +49,13 @@
         this.contentChange = true;
         this.content = html
       },
+      onTitleChange(value) {
+        this.upNote();
+      },
       getNote() {
         this.loading = true;
         this.$axios.get(NOTE().getNote + this.note_id).then(resp => {
+          this.title = resp.data.title;
           this.content = resp.data.content;
         }).catch(error => {
           this.$message({
@@ -62,7 +70,7 @@
       },
       upNote() {
         this.loading = true;
-        this.$axios.patch(NOTE().upNote + this.note_id, {content: this.content}).then(resp => {
+        this.$axios.patch(NOTE().upNote + this.note_id, {content: this.content, title: this.title}).then(resp => {
           this.getNote();
         }).catch(error => {
           this.$message({
