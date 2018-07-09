@@ -5,11 +5,13 @@
         <template slot="title"><i class="el-icon-document"></i>&nbsp;笔记本</template>
         <el-menu-item-group>
           <template slot="title"></template>
-          <el-menu-item @click="setNote(n.id)" v-for="(n,index) in note_books" :key="n.id" :index="index.toString()">
-            {{n.name}}
-            <a @click.stop="delNoteBook(n.id)" style="float: right;"><i class="el-icon-delete"></i></a>
-            <a @click.stop="upNoteBook(n.id)" style="float: right;"><i class="el-icon-edit"></i></a>
-          </el-menu-item>
+          <router-link :to="n.id" v-for="(n,index) in note_books" :key="n.id">
+            <el-menu-item @click="setNote(n.id)" :index="index.toString()">
+              {{n.name}}
+              <a @click.stop.prevent="delNoteBook(n.id)" style="float: right;"><i class="el-icon-delete"></i></a>
+              <a @click.stop.prevent="upNoteBook(n.id)" style="float: right;"><i class="el-icon-edit"></i></a>
+            </el-menu-item>
+          </router-link>
         </el-menu-item-group>
       </el-submenu>
       <router-link to="/new_note">
@@ -22,10 +24,12 @@
         <i class="el-icon-plus"></i>
         <span slot="title">新建笔记本</span>
       </el-menu-item>
-      <el-menu-item index="/trash">
-        <i class="el-icon-delete"></i>
-        <span slot="title">废纸篓</span>
-      </el-menu-item>
+      <router-link to="/trash">
+        <el-menu-item index="/trash">
+          <i class="el-icon-delete"></i>
+          <span slot="title">废纸篓</span>
+        </el-menu-item>
+      </router-link>
     </el-menu>
   </el-aside>
 </template>
@@ -121,7 +125,7 @@
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: '取消修改'
           });
         });
       },
@@ -150,7 +154,7 @@
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: '取消添加'
           });
         });
       },
@@ -160,7 +164,8 @@
     },
     mounted() {
       this.getNoteBookList(true);
-      this.active = this.$route.path === '/' ? "0" : this.$route.path;
+      //this.active = this.$route.path === '/' ? "0" : this.$route.path;
+      this.active = "0";
       this.$route.path === '/login' ? this.show = false : this.show = true;
     }
   }

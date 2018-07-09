@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Note from '../components/Note'
 import NewNote from '../components/NewNote'
 import Login from '../components/Login'
+import Trash from '../components/Trash'
 
 Vue.use(Router);
 
@@ -10,14 +11,20 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/note/:id',
       name: 'Note',
-      component: Note
+      component: Note,
+      props: true
     },
     {
       path: '/new_note',
       name: 'NewNote',
       component: NewNote
+    },
+    {
+      path: '/trash',
+      name: 'Trash',
+      component: Trash
     },
     {
       path: '/login',
@@ -27,7 +34,7 @@ export default new Router({
     },
     {
       path: '/*',
-      redirect: '/'
+      redirect: '/note/0'
     }
   ]
 })

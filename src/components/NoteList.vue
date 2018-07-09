@@ -21,6 +21,7 @@
 
   export default {
     name: "NoteList",
+    props: ['id'],
     data() {
       return {
         notes: [],
@@ -63,6 +64,10 @@
 
         }
       })
+    },
+    beforeDestroy() {
+      bus.$off("noteId");
+      bus.$off("selectNote");
     }
   }
 </script>

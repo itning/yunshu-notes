@@ -1,9 +1,9 @@
 <template>
-  <el-container v-loading="loading">
+  <el-container>
     <el-aside width="300px">
-      <note-list/>
+      <note-list :id="id"/>
     </el-aside>
-    <el-main>
+    <el-main v-loading="loading">
       <quill-editor
         v-model="content"
         ref="myQuillEditor"
@@ -24,6 +24,7 @@
   export default {
     name: "Note",
     components: {NoteList},
+    props: ['id'],
     data() {
       return {
         contentChange: false,
