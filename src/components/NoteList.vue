@@ -1,5 +1,5 @@
 <template>
-  <section v-loading="loading" style="min-height: 100px">
+  <el-aside width="300px" v-loading="loading" style="min-height: 100px">
     <el-card v-for="note in notes" :key="note.id" shadow="hover">
       <div>
         <a style="cursor: pointer" @click="getNote(note.id)">
@@ -11,7 +11,7 @@
         <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
       </div>
     </el-card>
-  </section>
+  </el-aside>
 </template>
 
 <script>
