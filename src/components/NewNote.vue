@@ -1,14 +1,15 @@
 <template>
   <el-container>
     <el-header>
-      <div>
-        <el-input placeholder="在这里输入笔记的标题..." v-model="aa" style="margin-top: 8px;width: 79%;">
+      <div style="text-align: center;">
+        <el-input placeholder="在这里输入笔记的标题..." v-model="aa" style="margin-top: 8px;width: 68%;">
           <template slot="prepend">标题:</template>
         </el-input>
         <el-select v-model="aa" placeholder="选择笔记本" style="width: 20%">
           <el-option label="笔记本A" value="shanghai"></el-option>
           <el-option label="笔记本B" value="beijing"></el-option>
         </el-select>
+        <el-button type="primary" plain style="width: 10%">保存</el-button>
       </div>
     </el-header>
     <el-main>
