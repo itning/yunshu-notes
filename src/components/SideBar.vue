@@ -5,7 +5,7 @@
         <template slot="title"><i class="el-icon-document"></i>&nbsp;笔记本</template>
         <el-menu-item-group>
           <template slot="title"></template>
-          <router-link :to="n.id" v-for="(n,index) in note_books" :key="n.id">
+          <router-link to="/note" v-for="(n,index) in note_books" :key="n.id">
             <el-menu-item @click="setNote(n.id)" :index="index.toString()">
               {{n.name}}
               <a @click.stop.prevent="delNoteBook(n.id)" style="float: right;"><i class="el-icon-delete"></i></a>
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-  import bus from '../assets/eventBus';
   import {NOTE_BOOK} from "../api";
 
   export default {
@@ -159,7 +158,8 @@
         });
       },
       setNote(id) {
-        bus.$emit('noteId', id);
+        console.log(id);
+        this.$emit('noteId', id);
       }
     },
     mounted() {

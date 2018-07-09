@@ -1,7 +1,7 @@
 <template>
   <el-container>
-    <note-list/>
-    <editor/>
+    <note-list @selectNote="onSelectNote" :noteId="noteId"/>
+    <editor :selectNote="selectNote"/>
   </el-container>
 </template>
 
@@ -11,7 +11,18 @@
 
   export default {
     name: "Note",
-    components: {NoteList, Editor}
+    props: ['noteId'],
+    data() {
+      return {
+        selectNote: ''
+      }
+    },
+    components: {NoteList, Editor},
+    methods: {
+      onSelectNote(id) {
+        this.selectNote = id;
+      }
+    }
   }
 
 </script>

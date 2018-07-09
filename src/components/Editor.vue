@@ -15,11 +15,11 @@
 </template>
 
 <script>
-  import bus from '../assets/eventBus';
   import {NOTE} from "../api";
 
   export default {
     name: "Editor",
+    props: ['selectNote'],
     data() {
       return {
         contentChange: false,
@@ -46,7 +46,6 @@
         this.contentChange = true;
       },
       onEditorChange({quill, html, text}) {
-        console.log("change");
         this.contentChange = !this.contentChange;
         this.content = html
       },
@@ -89,12 +88,11 @@
         });
       }
     },
-    mounted() {
-      const that = this;
-      bus.$on('selectNote', function (id) {
-        that.note_id = id;
-        that.getNote();
-      })
+    watch: {
+      selectNote(now, old) {
+        this.note_id = now;
+        this.getNote();
+      }
     }
   }
 </script>

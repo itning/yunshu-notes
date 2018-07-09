@@ -5,8 +5,8 @@
         <tool-bar/>
       </el-header>
       <el-container>
-        <side-bar/>
-        <router-view :clientHeight="clientHeight"/>
+        <side-bar @noteId="setNoteId"/>
+        <router-view :clientHeight="clientHeight" :noteId="noteId"/>
       </el-container>
     </el-container>
   </section>
@@ -21,7 +21,13 @@
     components: {ToolBar, SideBar},
     data() {
       return {
-        clientHeight: '600px'
+        clientHeight: '600px',
+        noteId: ''
+      }
+    },
+    methods: {
+      setNoteId(id) {
+        this.noteId = id;
       }
     },
     mounted() {

@@ -15,12 +15,12 @@
 </template>
 
 <script>
-  import bus from '../assets/eventBus';
   import dayjs from 'dayjs'
   import {NOTE} from "../api";
 
   export default {
     name: "NoteList",
+    props: ['noteId'],
     data() {
       return {
         notes: [],
@@ -50,22 +50,26 @@
         });
       },
       getNote(id) {
-        bus.$emit('selectNote', id);
+        this.$emit('selectNote', id);
+      }
+    },
+    watch: {
+      noteId(now, old) {
+        if (now === 0) {
+          this.loading = false;
+        } else {
+          this.getNoteList(now);
+        }
       }
     },
     mounted() {
-      const that = this;
-      bus.$on("noteId", function (data) {
-        if (data === 0) {
-          that.loading = false;
+      if (this.noteId !== '') {
+        if (this.noteId === 0) {
+          this.loading = false;
         } else {
-          that.getNoteList(data);
+          this.getNoteList(this.noteId);
         }
-      })
-    },
-    beforeDestroy() {
-      bus.$off("noteId");
-      bus.$off("selectNote");
+      }
     }
   }
 </script>
