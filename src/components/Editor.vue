@@ -43,10 +43,11 @@
         console.log('editor focus!', quill)
       },
       onEditorReady(quill) {
-        console.log('editor ready!', quill)
+        this.contentChange = true;
       },
       onEditorChange({quill, html, text}) {
-        this.contentChange = true;
+        console.log("change");
+        this.contentChange = !this.contentChange;
         this.content = html
       },
       onTitleChange(value) {
@@ -71,6 +72,10 @@
       upNote() {
         this.loading = true;
         this.$axios.patch(NOTE().upNote + this.note_id, {content: this.content, title: this.title}).then(resp => {
+          this.$message({
+            message: '笔记更新成功!',
+            type: 'success'
+          });
           this.getNote();
         }).catch(error => {
           this.$message({
@@ -82,11 +87,6 @@
         }).then(() => {
           this.loading = false;
         });
-      }
-    },
-    computed: {
-      editor() {
-        return this.$refs.myQuillEditor.quill
       }
     },
     mounted() {
