@@ -158,7 +158,6 @@
         });
       },
       setNote(id) {
-        console.log(id);
         this.$emit('noteId', id);
       }
     },
