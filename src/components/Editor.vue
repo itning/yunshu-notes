@@ -8,8 +8,6 @@
       ref="myQuillEditor"
       :options="editorOption"
       @blur="onEditorBlur($event)"
-      @focus="onEditorFocus($event)"
-      @ready="onEditorReady($event)"
       @change="onEditorChange($event)"></quill-editor>
   </el-main>
 </template>
@@ -39,14 +37,8 @@
           this.upNote();
         }
       },
-      onEditorFocus(quill) {
-        console.log('editor focus!', quill)
-      },
-      onEditorReady(quill) {
-        this.contentChange = true;
-      },
       onEditorChange({quill, html, text}) {
-        this.contentChange = !this.contentChange;
+        this.contentChange = true;
         this.content = html
       },
       onTitleChange(value) {
@@ -71,10 +63,6 @@
       upNote() {
         this.loading = true;
         this.$axios.patch(NOTE().upNote + this.note_id, {content: this.content, title: this.title}).then(resp => {
-          this.$message({
-            message: '笔记更新成功!',
-            type: 'success'
-          });
           this.getNote();
         }).catch(error => {
           this.$message({

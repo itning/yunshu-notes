@@ -2,16 +2,30 @@
   <section>
     <img src="../assets/logo_w_small.png" alt="logo" class="logo_img">
     <!--下拉菜单-->
-    <el-dropdown v-if="show">
+    <el-dropdown v-if="show" @command="setFormVisible">
       <span class="logo_info">{{login_info}}</span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>修改密码</el-dropdown-item>
+        <el-dropdown-item command>修改信息</el-dropdown-item>
         <el-dropdown-item>注销登陆</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <el-input v-if="show" class="search_input" placeholder="搜索笔记..." prefix-icon="el-icon-search" v-model="search_key"
               clearable>
     </el-input>
+    <el-dialog title="个人信息" :visible.sync="dialogFormVisible">
+      <el-form>
+        <el-form-item label="昵称">
+          <el-input v-model="name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="password" type="password" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </section>
 </template>
 
@@ -22,7 +36,15 @@
       return {
         search_key: '',
         login_info: '舒露 已登陆',
-        show: true
+        show: true,
+        dialogFormVisible: false,
+        name: '舒露',
+        password: ''
+      }
+    },
+    methods: {
+      setFormVisible(status) {
+        this.dialogFormVisible = status;
       }
     },
     mounted() {
