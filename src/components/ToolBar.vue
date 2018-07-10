@@ -1,6 +1,8 @@
 <template>
   <section>
-    <img src="../assets/logo_w_small.png" alt="logo" class="logo_img">
+    <router-link to="/">
+      <img src="../assets/logo_w_small.png" alt="logo" class="logo_img">
+    </router-link>
     <!--下拉菜单-->
     <el-dropdown v-if="show" @command="setFormVisible">
       <span class="logo_info">{{login_info}}</span>
