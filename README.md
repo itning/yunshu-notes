@@ -35,8 +35,6 @@ npm run build
 
 [vue-router](https://github.com/vuejs/vue-router) Vue 路由
 
-## 为什么叫云舒
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=574335388&auto=0&height=66"></iframe>
 ## 开源协议
 
 MIT
