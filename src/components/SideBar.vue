@@ -1,7 +1,7 @@
 <template>
   <el-aside width="200px" v-if="show" v-loading="loading">
     <el-menu :default-openeds="['1']" :default-active="active">
-      <el-submenu index="1">
+      <el-submenu index="1" v-if="noteBookListNotNull">
         <template slot="title"><i class="el-icon-document"></i>&nbsp;笔记本</template>
         <el-menu-item-group>
           <template slot="title"></template>
@@ -14,7 +14,7 @@
           </router-link>
         </el-menu-item-group>
       </el-submenu>
-      <router-link to="/new_note">
+      <router-link to="/new_note" v-if="noteBookListNotNull">
         <el-menu-item index="/new_note">
           <i class="el-icon-edit"></i>
           <span slot="title">新建笔记</span>
@@ -24,7 +24,7 @@
         <i class="el-icon-plus"></i>
         <span slot="title">新建笔记本</span>
       </el-menu-item>
-      <router-link to="/trash">
+      <router-link to="/trash" v-if="noteBookListNotNull">
         <el-menu-item index="/trash">
           <i class="el-icon-delete"></i>
           <span slot="title">废纸篓</span>
@@ -41,6 +41,7 @@
     name: "SideBar",
     data() {
       return {
+        noteBookListNotNull: true,
         loading: true,
         active: '',
         show: true,
@@ -55,15 +56,17 @@
           if (first && resp.data.length !== 0) {
             this.setNote(resp.data[0].id);
           } else {
+            this.noteBookListNotNull = false;
             this.setNote(0);
           }
         }).catch(error => {
           this.$message({
             showClose: true,
             type: 'error',
-            duration: 0,
-            message: '获取笔记本信息失败!'
+            message: '请先登录!'
           });
+          this.show = false;
+          this.$router.push({path: '/login'});
         }).then(() => {
           this.loading = false;
         });

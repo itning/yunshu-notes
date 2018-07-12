@@ -47,6 +47,9 @@
 </template>
 
 <script>
+  import * as Qs from "qs";
+  import {USER} from "../api";
+
   export default {
     name: "Login",
     props: ['clientHeight'],
@@ -96,7 +99,30 @@
       form_login() {
         this.$refs['login'].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let data = Qs.stringify({
+              username: this.login.username,
+              password: this.login.password
+            });
+            this.$axios({
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              method: 'post',
+              url: USER().login,
+              data: data
+            }).then(resp => {
+              if (resp.data.status === 200) {
+                window.location = "/"
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: resp.data.msg,
+                  type: 'warning'
+                });
+              }
+            }, (error) => {
+              console.log(error)
+            });
           } else {
             console.log('error submit!!');
           }

@@ -8,7 +8,7 @@
       <span class="logo_info">{{login_info}}</span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command>修改信息</el-dropdown-item>
-        <el-dropdown-item>注销登陆</el-dropdown-item>
+        <el-dropdown-item command="logout">注销登陆</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <el-input v-if="show" class="search_input" placeholder="搜索笔记..." prefix-icon="el-icon-search" v-model="search_key"
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+  import {USER} from "../api";
+
   export default {
     name: "ToolBar",
     data() {
@@ -46,11 +48,35 @@
     },
     methods: {
       setFormVisible(status) {
-        this.dialogFormVisible = status;
+        if (status === "logout") {
+          this.logout();
+        } else {
+          this.dialogFormVisible = status;
+        }
+      },
+      getLoginUserInfo() {
+        this.$axios.get(USER().getLoginUser).then(resp => {
+          this.name = resp.data.name;
+          this.login_info = resp.data.name + " 已登陆";
+        }).catch(error => {
+
+        }).then(() => {
+
+        });
+      },
+      logout() {
+        this.$axios.get(USER().logout).then(resp => {
+          window.location.href = "/login";
+        }).catch(error => {
+
+        }).then(() => {
+
+        });
       }
     },
     mounted() {
       this.$route.path === '/login' ? this.show = false : this.show = true;
+      this.getLoginUserInfo();
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <el-main v-loading="loading">
+  <el-main v-loading="loading" v-if="noteNotNull">
     <el-input @change="onTitleChange($event)" style="margin-bottom: 8px" v-model="title" placeholder="标题">
       <template slot="prepend">标题:</template>
     </el-input>
@@ -20,6 +20,7 @@
     props: ['selectNote'],
     data() {
       return {
+        noteNotNull: true,
         contentChange: false,
         title: '',
         note_id: '',
@@ -78,8 +79,13 @@
     },
     watch: {
       selectNote(now, old) {
-        this.note_id = now;
-        this.getNote();
+        if (now === 0) {
+          this.loading = false;
+          this.noteNotNull = false;
+        } else {
+          this.note_id = now;
+          this.getNote();
+        }
       }
     }
   }

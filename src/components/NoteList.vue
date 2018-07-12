@@ -56,6 +56,7 @@
     watch: {
       noteId(now, old) {
         if (now === 0) {
+          this.getNote(0);
           this.loading = false;
         } else {
           this.getNoteList(now);

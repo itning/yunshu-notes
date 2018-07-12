@@ -15,7 +15,7 @@ Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 Vue.use(VueQuillEditor);
-Vue.prototype.$axios = axios;
+Vue.prototype.$axios = axios.create({withCredentials: true});
 
 /* eslint-disable no-new */
 new Vue({

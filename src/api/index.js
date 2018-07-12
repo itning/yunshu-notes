@@ -20,3 +20,12 @@ export function NOTE() {
   }
 }
 
+export function USER() {
+  return {
+    "login": BASE_URL + '/login',
+    "logout": BASE_URL + '/logout',
+    "registered": BASE_URL + '/registered',
+    "getLoginUser": BASE_URL + '/getLoginUser'
+  }
+}
+
