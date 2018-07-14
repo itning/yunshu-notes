@@ -55,26 +55,35 @@
         }
       },
       getLoginUserInfo() {
-        this.$axios.get(USER().getLoginUser).then(resp => {
-          this.name = resp.data.name;
-          this.login_info = resp.data.name + " 已登陆";
-        }).catch(error => {
-
-        }).then(() => {
-
+        this.$http.get(USER().getLoginUser, {credentials: true}).then(resp => {
+          this.name = resp.body.data.name;
+          this.login_info = resp.body.data.name + " 已登陆";
+        }, response => {
+          this.$notify.error({
+            title: 'Wow!',
+            message: '获取登录用户信息失败!'
+          });
         });
       },
       logout() {
         this.$http.get(USER().logout, {credentials: true}).then(response => {
           window.location.href = "/login";
         }, response => {
-
+          //server error
+          this.$notify.warning({
+            title: 'Sorry',
+            message: '登陆过期,请重新登陆'
+          });
         });
       }
     },
     mounted() {
-      this.$route.path === '/login' ? this.show = false : this.show = true;
-      this.getLoginUserInfo();
+      if (this.$route.path === '/login') {
+        this.show = false;
+      } else {
+        this.getLoginUserInfo();
+        this.show = true;
+      }
     }
   }
 </script>
