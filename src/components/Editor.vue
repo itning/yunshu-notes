@@ -47,33 +47,42 @@
       },
       getNote() {
         this.loading = true;
-        this.$axios.get(NOTE().getNote + this.note_id).then(resp => {
-          this.title = resp.data.title;
-          this.content = resp.data.content;
-        }).catch(error => {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            duration: 0,
-            message: '获取笔记信息失败!'
-          });
-        }).then(() => {
+        this.$http.get(NOTE().getNote + this.note_id, {credentials: true}).then(resp => {
+          this.title = resp.body.data.title;
+          this.content = resp.body.data.content;
           this.loading = false;
+        }, response => {
+          if (response.status === 401) {
+            window.location.href = "/login"
+          } else {
+            this.$message({
+              showClose: true,
+              type: 'error',
+              duration: 0,
+              message: '获取笔记信息失败!'
+            });
+          }
         });
       },
       upNote() {
         this.loading = true;
-        this.$axios.patch(NOTE().upNote + this.note_id, {content: this.content, title: this.title}).then(resp => {
+        this.$http.patch(NOTE().upNote + this.note_id, {
+          content: this.content,
+          title: this.title
+        }, {credentials: true}).then(resp => {
           this.getNote();
-        }).catch(error => {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            duration: 0,
-            message: '获取笔记信息失败!'
-          });
-        }).then(() => {
           this.loading = false;
+        }, response => {
+          if (response.status === 401) {
+            window.location.href = "/login"
+          } else {
+            this.$message({
+              showClose: true,
+              type: 'error',
+              duration: 0,
+              message: '修改笔记信息失败!'
+            });
+          }
         });
       }
     },
@@ -83,6 +92,8 @@
           this.loading = false;
           this.noteNotNull = false;
         } else {
+          this.loading = true;
+          this.noteNotNull = true;
           this.note_id = now;
           this.getNote();
         }

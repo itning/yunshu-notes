@@ -8,7 +8,7 @@
           <h5>修改时间:{{note.gmtModified}}</h5>
         </a>
         <el-button size="mini" type="warning" icon="el-icon-share" circle></el-button>
-        <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
+        <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="deleteNote(note.id)"></el-button>
       </div>
     </el-card>
   </el-aside>
@@ -30,24 +30,36 @@
     methods: {
       getNoteList(id) {
         this.loading = true;
-        this.$axios.get(NOTE().getNotes + id).then(resp => {
-          resp.data.map(note => {
-            note.gmtCreate = dayjs(note.gmtCreate).format("YYYY年MM月DD日 HH:mm:ss");
-            note.gmtModified = dayjs(note.gmtModified).format("YYYY年MM月DD日 HH:mm:ss");
-            return note;
-          });
-          this.notes = resp.data;
-          this.getNote(resp.data[0].id);
-        }).catch(error => {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            duration: 0,
-            message: '获取笔记信息失败!'
-          });
-        }).then(() => {
+        this.$http.get(NOTE().getNotes + id, {credentials: true}).then(resp => {
+          //如果该笔记本下有笔记
+          if (resp.body.dataList.length !== 0) {
+            resp.body.dataList.map(note => {
+              note.gmtCreate = dayjs(note.gmtCreate).format("YYYY年MM月DD日 HH:mm:ss");
+              note.gmtModified = dayjs(note.gmtModified).format("YYYY年MM月DD日 HH:mm:ss");
+              return note;
+            });
+            this.notes = resp.body.dataList;
+            this.getNote(resp.body.dataList[0].id);
+          } else {
+            this.notes = [];
+            this.getNote(0);
+          }
           this.loading = false;
+        }, response => {
+          if (response.status === 401) {
+            window.location.href = "/login"
+          } else {
+            this.$message({
+              showClose: true,
+              type: 'error',
+              duration: 0,
+              message: '获取笔记信息失败!'
+            });
+          }
         });
+      },
+      deleteNote(id) {
+
       },
       getNote(id) {
         this.$emit('selectNote', id);

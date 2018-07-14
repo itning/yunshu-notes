@@ -125,7 +125,7 @@
               this.getNoteBookList();
             }, response => {
               if (response.status === 401) {
-                //window.location.href = "/login"
+                window.location.href = "/login"
               } else {
                 this.getNoteBookList();
                 this.$message({
