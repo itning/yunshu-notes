@@ -52,28 +52,32 @@
       getNoteBookList(first = false) {
         this.loading = true;
         this.$http.get(NOTE_BOOK().getNoteBook, {credentials: true}).then(response => {
-          console.log(response);
           this.note_books = response.body.dataList;
-          if (first && response.body.dataList.length !== 0) {
-            this.setNote(response.body.dataList[0].id);
-          } else {
+          this.noteBookListNotNull = true;
+          //空数组(没有笔记本数据)
+          if (response.body.dataList.length === 0) {
             this.noteBookListNotNull = false;
             this.setNote(0);
           }
+          //组件第一次被初始化并且有数据
+          if (first && response.body.dataList.length !== 0) {
+            this.setNote(response.body.dataList[0].id);
+          }
           this.loading = false;
         }, response => {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            message: '请先登录!'
-          });
-          this.show = false;
-          this.loading = false;
-          this.$router.push({path: '/login'});
+          if (response.status === 401) {
+            window.location.href = "/login"
+          } else {
+            //server error
+            this.$notify.error({
+              title: 'Sorry',
+              message: '服务器开小差了,请稍后再试'
+            });
+          }
         });
       },
       delNoteBook(id) {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除该笔记本, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -84,14 +88,18 @@
               message: '删除成功!'
             });
             this.getNoteBookList();
-          }, error => {
-            this.getNoteBookList();
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '删除失败!'
-            });
+          }, response => {
+            if (response.status === 401) {
+              window.location.href = "/login"
+            } else {
+              this.getNoteBookList();
+              this.$message({
+                showClose: true,
+                type: 'error',
+                duration: 0,
+                message: '删除失败!'
+              });
+            }
           });
         }).catch(() => {
           this.$message({
@@ -109,20 +117,24 @@
           })[0].name
         }).then(({value}) => {
           if (value !== '' && value != null) {
-            this.$http.patch(NOTE_BOOK().upNoteBook + id + '/' + value, {credentials: true}).then(resp => {
+            this.$http.patch(NOTE_BOOK().upNoteBook + id + '/' + value, {}, {credentials: true}).then(resp => {
               this.$message({
                 type: 'success',
                 message: '更新成功!'
               });
-            }).catch(error => {
-              this.$message({
-                showClose: true,
-                type: 'error',
-                duration: 0,
-                message: '更新失败!'
-              });
-            }).then(() => {
               this.getNoteBookList();
+            }, response => {
+              if (response.status === 401) {
+                //window.location.href = "/login"
+              } else {
+                this.getNoteBookList();
+                this.$message({
+                  showClose: true,
+                  type: 'error',
+                  duration: 0,
+                  message: '更新失败!'
+                });
+              }
             });
           }
         }).catch(() => {
@@ -138,20 +150,26 @@
           cancelButtonText: '取消'
         }).then(({value}) => {
           if (value !== '' && value != null) {
-            this.$http.post(NOTE_BOOK().newNoteBook, {name: value}, {credentials: true}).then(resp => {
+            this.$http.post(NOTE_BOOK().newNoteBook, {name: value}, {
+              emulateJSON: true,
+              credentials: true
+            }).then(resp => {
               this.$message({
                 type: 'success',
                 message: '添加成功!'
               });
-            }).catch(error => {
-              this.$message({
-                showClose: true,
-                type: 'error',
-                duration: 0,
-                message: '添加失败!'
-              });
-            }).then(() => {
               this.getNoteBookList();
+            }, response => {
+              if (response.status === 401) {
+                window.location.href = "/login"
+              } else {
+                this.$message({
+                  showClose: true,
+                  type: 'error',
+                  duration: 0,
+                  message: '添加失败!'
+                });
+              }
             });
           }
         }).catch(() => {

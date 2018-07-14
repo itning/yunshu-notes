@@ -107,6 +107,7 @@
               .then(response => {
                 //status is 200 login success
                 if (response.body.status === 200) {
+                  localStorage.setItem("login_name", response.body.data.name);
                   window.location = "/"
                 } else {
                   //密码错误,用户不存在

@@ -39,10 +39,10 @@
     data() {
       return {
         search_key: '',
-        login_info: '舒露 已登陆',
+        login_info: '',
         show: true,
         dialogFormVisible: false,
-        name: '舒露',
+        name: '',
         password: ''
       }
     },
@@ -55,25 +55,25 @@
         }
       },
       getLoginUserInfo() {
-        this.$http.get(USER().getLoginUser, {credentials: true}).then(resp => {
-          this.name = resp.body.data.name;
-          this.login_info = resp.body.data.name + " 已登陆";
-        }, response => {
-          this.$notify.error({
-            title: 'Wow!',
-            message: '获取登录用户信息失败!'
-          });
-        });
+        if (localStorage.getItem("login_name") !== null) {
+          this.name = localStorage.getItem("login_name");
+          this.login_info = localStorage.getItem("login_name") + " 已登陆";
+        }
       },
       logout() {
         this.$http.get(USER().logout, {credentials: true}).then(response => {
+          localStorage.removeItem("login_name");
           window.location.href = "/login";
         }, response => {
-          //server error
-          this.$notify.warning({
-            title: 'Sorry',
-            message: '登陆过期,请重新登陆'
-          });
+          if (response.status === 401) {
+            window.location.href = "/login"
+          } else {
+            //server error
+            this.$notify.error({
+              title: 'Sorry',
+              message: '服务器开小差了,请稍后再试'
+            });
+          }
         });
       }
     },
