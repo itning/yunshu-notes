@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import VueQuillEditor from 'vue-quill-editor'
-import axios from 'axios'
+import VueResource from 'vue-resource'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -15,7 +15,7 @@ Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 Vue.use(VueQuillEditor);
-Vue.prototype.$axios = axios.create({withCredentials: true});
+Vue.use(VueResource);
 
 /* eslint-disable no-new */
 new Vue({

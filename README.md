@@ -25,7 +25,7 @@ npm run build
 ## 项目技术栈
 
 
-[axios](https://github.com/axios/axios) HTTP客户端
+[vue-resource](https://github.com/pagekit/vue-resource) HTTP客户端
 
 [dayjs](https://github.com/iamkun/dayjs) 一个轻量的处理时间和日期的 JavaScript 库
 

@@ -47,7 +47,6 @@
 </template>
 
 <script>
-  import * as Qs from "qs";
   import {USER} from "../api";
 
   export default {
@@ -98,37 +97,37 @@
     methods: {
       form_login() {
         this.$refs['login'].validate((valid) => {
+          //判断验证是否全部通过
           if (valid) {
-            let data = Qs.stringify({
-              username: this.login.username,
-              password: this.login.password
-            });
-            this.$axios({
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              },
-              method: 'post',
-              url: USER().login,
-              data: data
-            }).then(resp => {
-              if (resp.data.status === 200) {
-                window.location = "/"
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: resp.data.msg,
-                  type: 'warning'
+            //POST REQUEST
+            this.$http.post(USER().login, {
+              "username": this.login.username,
+              "password": this.login.password
+            }, {emulateJSON: true, credentials: true})
+              .then(response => {
+                //status is 200 login success
+                if (response.body.status === 200) {
+                  window.location = "/"
+                } else {
+                  //密码错误,用户不存在
+                  this.$message({
+                    showClose: true,
+                    message: response.body.msg,
+                    type: 'warning'
+                  });
+                }
+              }, response => {
+                //server error
+                this.$notify.error({
+                  title: 'Sorry',
+                  message: '服务器开小差了,请稍后再试'
                 });
-              }
-            }, (error) => {
-              console.log(error)
-            });
-          } else {
-            console.log('error submit!!');
+              });
           }
         });
       },
       form_reg() {
+        //TODO 注册
         this.$refs['reg'].validate((valid) => {
           if (valid) {
             alert('submit!');

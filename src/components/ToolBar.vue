@@ -65,11 +65,9 @@
         });
       },
       logout() {
-        this.$axios.get(USER().logout).then(resp => {
+        this.$http.get(USER().logout, {credentials: true}).then(response => {
           window.location.href = "/login";
-        }).catch(error => {
-
-        }).then(() => {
+        }, response => {
 
         });
       }

@@ -51,24 +51,25 @@
     methods: {
       getNoteBookList(first = false) {
         this.loading = true;
-        this.$axios.get(NOTE_BOOK().getNoteBook).then(resp => {
-          this.note_books = resp.data;
-          if (first && resp.data.length !== 0) {
-            this.setNote(resp.data[0].id);
+        this.$http.get(NOTE_BOOK().getNoteBook, {credentials: true}).then(response => {
+          console.log(response);
+          this.note_books = response.body.dataList;
+          if (first && response.body.dataList.length !== 0) {
+            this.setNote(response.body.dataList[0].id);
           } else {
             this.noteBookListNotNull = false;
             this.setNote(0);
           }
-        }).catch(error => {
+          this.loading = false;
+        }, response => {
           this.$message({
             showClose: true,
             type: 'error',
             message: '请先登录!'
           });
           this.show = false;
-          this.$router.push({path: '/login'});
-        }).then(() => {
           this.loading = false;
+          this.$router.push({path: '/login'});
         });
       },
       delNoteBook(id) {
@@ -77,20 +78,20 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$axios.delete(NOTE_BOOK().delNoteBook + id).then(resp => {
+          this.$http.delete(NOTE_BOOK().delNoteBook + id, {credentials: true}).then(resp => {
             this.$message({
               type: 'success',
               message: '删除成功!'
             });
-          }).catch(error => {
+            this.getNoteBookList();
+          }, error => {
+            this.getNoteBookList();
             this.$message({
               showClose: true,
               type: 'error',
               duration: 0,
               message: '删除失败!'
             });
-          }).then(() => {
-            this.getNoteBookList();
           });
         }).catch(() => {
           this.$message({
@@ -108,7 +109,7 @@
           })[0].name
         }).then(({value}) => {
           if (value !== '' && value != null) {
-            this.$axios.patch(NOTE_BOOK().upNoteBook + id + '/' + value).then(resp => {
+            this.$http.patch(NOTE_BOOK().upNoteBook + id + '/' + value, {credentials: true}).then(resp => {
               this.$message({
                 type: 'success',
                 message: '更新成功!'
@@ -137,7 +138,7 @@
           cancelButtonText: '取消'
         }).then(({value}) => {
           if (value !== '' && value != null) {
-            this.$axios.post(NOTE_BOOK().newNoteBook, {name: value}).then(resp => {
+            this.$http.post(NOTE_BOOK().newNoteBook, {name: value}, {credentials: true}).then(resp => {
               this.$message({
                 type: 'success',
                 message: '添加成功!'
@@ -165,9 +166,14 @@
       }
     },
     mounted() {
-      this.getNoteBookList(true);
-      this.active = this.$route.path === '/note' ? "0" : this.$route.path;
-      this.$route.path === '/login' ? this.show = false : this.show = true;
+      if (this.$route.path !== '/login') {
+        this.getNoteBookList(true);
+        this.active = this.$route.path === '/note' ? "0" : this.$route.path;
+        this.$route.path === '/login' ? this.show = false : this.show = true;
+      } else {
+        this.loading = false;
+        this.show = false;
+      }
     }
   }
 </script>

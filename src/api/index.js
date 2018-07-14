@@ -6,7 +6,7 @@ export function NOTE_BOOK() {
     "getNoteBook": BASE_URL + '/note_books',
     "delNoteBook": BASE_URL + '/note_book/',
     "upNoteBook": BASE_URL + '/note_book/',
-    "newNoteBook": BASE_URL + '/note_books'
+    "newNoteBook": BASE_URL + '/note_book'
   }
 }
 
@@ -16,7 +16,7 @@ export function NOTE() {
     "getNote": BASE_URL + '/note/',
     "delNote": BASE_URL + '/note/',
     "upNote": BASE_URL + '/note/',
-    "newNote": BASE_URL + '/notes'
+    "newNote": BASE_URL + '/note'
   }
 }
 
