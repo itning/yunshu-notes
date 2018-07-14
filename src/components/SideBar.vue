@@ -192,6 +192,9 @@
         this.loading = false;
         this.show = false;
       }
+    },
+    beforeUpdate() {
+      this.active = this.$route.path === '/note' ? "0" : this.$route.path;
     }
   }
 </script>
