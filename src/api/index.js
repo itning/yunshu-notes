@@ -25,7 +25,8 @@ export function USER() {
     "login": BASE_URL + '/login',
     "logout": BASE_URL + '/logout',
     "registered": BASE_URL + '/registered',
-    "getLoginUser": BASE_URL + '/getLoginUser'
+    "getLoginUser": BASE_URL + '/getLoginUser',
+    "getCode": BASE_URL + '/get_code'
   }
 }
 

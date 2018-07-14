@@ -23,11 +23,11 @@
       <el-form :model="reg" ref="reg" label-position="left" status-icon :rules="rules" label-width="80px">
         <el-form-item label="邮箱" prop="username">
           <el-input v-model="reg.username">
-            <el-button slot="suffix" type="text" :disabled="!getCode" @click="getVCode">获取验证码</el-button>
+            <el-button slot="suffix" type="text" :disabled="!getCode" @click="getVCode">{{code_msg}}</el-button>
           </el-input>
         </el-form-item>
-        <el-form-item label="验证码" prop="checkCode">
-          <el-input :disabled="!inputCode"></el-input>
+        <el-form-item label="验证码" prop="code">
+          <el-input v-model="reg.code" :disabled="!inputCode"></el-input>
         </el-form-item>
         <el-form-item label="昵称" prop="name">
           <el-input v-model="reg.name" maxlength="8"></el-input>
@@ -63,6 +63,7 @@
       return {
         getCode: false,
         inputCode: false,
+        code_msg: '获取验证码',
         login: {
           username: '',
           password: ''
@@ -71,7 +72,8 @@
           name: '',
           username: '',
           password: '',
-          password2: ''
+          password2: '',
+          code: '',
         },
         rules: {
           username: [
@@ -88,7 +90,7 @@
           name: [
             {required: true, message: '请输入昵称'}
           ],
-          checkCode: [
+          code: [
             {required: true, message: '请输入验证码'}
           ]
         }
@@ -128,17 +130,44 @@
         });
       },
       form_reg() {
-        //TODO 注册
         this.$refs['reg'].validate((valid) => {
           if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
+            this.$http.post(USER().registered, {
+              name: this.reg.name,
+              username: this.reg.username,
+              password: this.reg.password,
+              code: this.reg.code
+            }, {emulateJSON: true, credentials: true}).then(response => {
+              this.$notify({
+                title: '成功',
+                message: '注册成功!',
+                type: 'success'
+              });
+            }, response => {
+              this.$message({
+                showClose: true,
+                message: '验证码不正确',
+                type: 'error'
+              });
+            });
           }
         });
       },
       getVCode() {
+        this.getCode = false;
         this.inputCode = true;
+        this.$http.get(USER().getCode + "?email=" + this.reg.username, {credentials: true}).then(response => {
+          this.code_msg = "重新获取";
+          this.getCode = true;
+        }, response => {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            duration: 0,
+            message: '邮件发送失败!'
+          });
+          this.getCode = true;
+        });
       }
     },
     watch: {
