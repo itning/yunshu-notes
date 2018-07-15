@@ -10,7 +10,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="form_login">立即登陆</el-button>
-          <el-button type="text">忘记密码?</el-button>
+          <el-button type="text" @click="dialogFormVisible = true">忘记密码?</el-button>
         </el-form-item>
         <el-form-item>
           <span>第三方平台登录 : </span>
@@ -43,6 +43,26 @@
         </el-form-item>
       </el-form>
     </el-tab-pane>
+
+    <el-dialog title="忘记密码" :visible.sync="dialogFormVisible" :close-on-click-modal="closeOnClickModal">
+      <el-form label-position="left" label-width="80px" :model="forgetPassword" ref="forget" status-icon :rules="rules">
+        <el-form-item label="邮箱" prop="username">
+          <el-input v-model="forgetPassword.username">
+            <el-button slot="suffix" type="text" :disabled="!getFCode" @click="getForgetVCode">获取验证码</el-button>
+          </el-input>
+        </el-form-item>
+        <el-form-item label="验证码" prop="code">
+          <el-input v-model="forgetPassword.code"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码" prop="password">
+          <el-input type="password" v-model="forgetPassword.password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="doForgetPassword">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-tabs>
 </template>
 
@@ -61,9 +81,12 @@
         }
       };
       return {
+        getFCode: false,
         getCode: false,
         inputCode: false,
         code_msg: '获取验证码',
+        dialogFormVisible: false,
+        closeOnClickModal: false,
         login: {
           username: '',
           password: ''
@@ -73,7 +96,14 @@
           username: '',
           password: '',
           password2: '',
+          code: ''
+        },
+        forgetPassword: {
+          username: '',
           code: '',
+          password: '',
+          password2: '',
+          key: ''
         },
         rules: {
           username: [
@@ -156,7 +186,7 @@
       getVCode() {
         this.getCode = false;
         this.code_msg = "重新获取";
-        this.$http.get(USER().getCode + "?email=" + this.reg.username, {credentials: true}).then(response => {
+        this.$http.get(USER().getCode + this.reg.username, {credentials: true}).then(response => {
           this.$message({
             message: '验证码已经成功发送!',
             type: 'success'
@@ -181,6 +211,61 @@
           }
           this.getCode = true;
         });
+      },
+      getForgetVCode() {
+        this.getFCode = false;
+        this.$http.get(USER().getVCode + this.forgetPassword.username, {credentials: true}).then(response => {
+          this.forgetPassword.key = response.body;
+          this.getFCode = true;
+          this.$message({
+            showClose: true,
+            type: 'success',
+            message: '验证码发送成功!'
+          });
+        }, response => {
+          if (response.status === 404) {
+            this.$message({
+              showClose: true,
+              type: 'error',
+              message: '用户不存在!'
+            });
+            this.getFCode = true;
+          } else {
+            this.$message({
+              showClose: true,
+              type: 'error',
+              duration: 0,
+              message: '邮件发送失败!'
+            });
+            this.getFCode = true;
+          }
+        });
+      },
+      doForgetPassword() {
+        this.$refs['forget'].validate((valid) => {
+          if (valid) {
+            this.$http.post(USER().forgetPassword, {
+              password: this.forgetPassword.password,
+              code: this.forgetPassword.code,
+              vCode: this.forgetPassword.key
+            }, {emulateJSON: true, credentials: true}).then(response => {
+              if (response.body.status === 200) {
+                this.$notify.success({
+                  title: '成功',
+                  message: '密码重置成功'
+                });
+                this.dialogFormVisible = false;
+              } else {
+                this.$notify.error({
+                  title: '失败',
+                  message: '密码重置失败'
+                });
+              }
+            }, response => {
+            });
+
+          }
+        });
       }
     },
     watch: {
@@ -188,6 +273,12 @@
         const that = this;
         this.$refs['reg'].$on('validate', function (prop, status) {
           status ? that.getCode = true : that.getCode = false;
+        })
+      },
+      'forgetPassword.username'() {
+        const that = this;
+        this.$refs['forget'].$on('validate', function (prop, status) {
+          status ? that.getFCode = true : that.getFCode = false;
         })
       }
     },
