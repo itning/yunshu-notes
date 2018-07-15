@@ -55,12 +55,7 @@
           if (response.status === 401) {
             window.location.href = "/login"
           } else {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '获取笔记信息失败!'
-            });
+            this.$message.error("获取笔记信息失败!");
           }
         });
       },
@@ -76,12 +71,7 @@
           if (response.status === 401) {
             window.location.href = "/login"
           } else {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '修改笔记信息失败!'
-            });
+            this.$message.error("修改笔记信息失败!");
           }
         });
       }

@@ -49,12 +49,7 @@
           if (response.status === 401) {
             window.location.href = "/login"
           } else {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '获取笔记信息失败!'
-            });
+            this.$message.error("获取笔记信息失败!");
           }
         });
       },
@@ -65,28 +60,17 @@
           type: 'warning'
         }).then(() => {
           this.$http.delete(NOTE().delNote + id, {credentials: true}).then(response => {
-            this.$message({
-              message: '笔记已经成功删除',
-              type: 'success'
-            });
+            this.$message.success("笔记已经成功删除!");
             this.getNoteList(this.noteId);
           }, response => {
             if (response.status === 401) {
               window.location.href = "/login"
             } else {
-              this.$message({
-                showClose: true,
-                type: 'error',
-                duration: 0,
-                message: '删除笔记失败!'
-              });
+              this.$message.error("删除笔记失败!");
             }
           });
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+          this.$message.info("已取消删除!");
         });
       },
       getNote(id) {

@@ -83,29 +83,18 @@
           type: 'warning'
         }).then(() => {
           this.$http.delete(NOTE_BOOK().delNoteBook + id, {credentials: true}).then(resp => {
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
+            this.$message.success("删除成功!");
             this.getNoteBookList();
           }, response => {
             if (response.status === 401) {
               window.location.href = "/login"
             } else {
               this.getNoteBookList();
-              this.$message({
-                showClose: true,
-                type: 'error',
-                duration: 0,
-                message: '删除失败!'
-              });
+              this.$message.error("删除失败!");
             }
           });
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+          this.$message.info("已取消删除!");
         });
       },
       upNoteBook(id) {
@@ -118,30 +107,19 @@
         }).then(({value}) => {
           if (value !== '' && value != null) {
             this.$http.patch(NOTE_BOOK().upNoteBook + id + '/' + value, {}, {credentials: true}).then(resp => {
-              this.$message({
-                type: 'success',
-                message: '更新成功!'
-              });
+              this.$message.success("更新成功!");
               this.getNoteBookList();
             }, response => {
               if (response.status === 401) {
                 window.location.href = "/login"
               } else {
                 this.getNoteBookList();
-                this.$message({
-                  showClose: true,
-                  type: 'error',
-                  duration: 0,
-                  message: '更新失败!'
-                });
+                this.$message.error("更新失败!");
               }
             });
           }
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消修改'
-          });
+          this.$message.info("取消修改!");
         });
       },
       newNoteBook() {
@@ -154,29 +132,18 @@
               emulateJSON: true,
               credentials: true
             }).then(resp => {
-              this.$message({
-                type: 'success',
-                message: '添加成功!'
-              });
+              this.$message.success("添加成功!");
               this.getNoteBookList();
             }, response => {
               if (response.status === 401) {
                 window.location.href = "/login"
               } else {
-                this.$message({
-                  showClose: true,
-                  type: 'error',
-                  duration: 0,
-                  message: '添加失败!'
-                });
+                this.$message.error("添加失败!");
               }
             });
           }
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消添加'
-          });
+          this.$message.info("取消添加!");
         });
       },
       setNote(id) {

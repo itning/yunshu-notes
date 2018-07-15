@@ -144,11 +144,7 @@
                   window.location = "/"
                 } else {
                   //密码错误,用户不存在
-                  this.$message({
-                    showClose: true,
-                    message: response.body.msg,
-                    type: 'warning'
-                  });
+                  this.$message.warning(response.body.msg);
                 }
               }, response => {
                 //server error
@@ -175,11 +171,7 @@
                 type: 'success'
               });
             }, response => {
-              this.$message({
-                showClose: true,
-                message: '验证码不正确',
-                type: 'error'
-              });
+              this.$message.error("验证码不正确!");
             });
           }
         });
@@ -188,27 +180,14 @@
         this.getCode = false;
         this.code_msg = "重新获取";
         this.$http.get(USER().getCode + this.reg.username, {credentials: true}).then(response => {
-          this.$message({
-            message: '验证码已经成功发送!',
-            type: 'success'
-          });
+          this.$message.success("验证码已经成功发送!");
           this.inputCode = true;
           this.getCode = true;
         }, response => {
           if (response.status === 406) {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '该邮箱已经被注册!'
-            });
+            this.$message.error("该邮箱已经被注册!");
           } else {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '邮件发送失败!'
-            });
+            this.$message.error("邮件发送失败!");
           }
           this.getCode = true;
         });
@@ -218,26 +197,13 @@
         this.$http.get(USER().getVCode + this.forgetPassword.username, {credentials: true}).then(response => {
           this.forgetPassword.key = response.body;
           this.getFCode = true;
-          this.$message({
-            showClose: true,
-            type: 'success',
-            message: '验证码发送成功!'
-          });
+          this.$message.success("验证码发送成功!");
         }, response => {
           if (response.status === 404) {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              message: '用户不存在!'
-            });
+            this.$message.error("用户不存在!");
             this.getFCode = true;
           } else {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '邮件发送失败!'
-            });
+            this.$message.error("邮件发送失败!");
             this.getFCode = true;
           }
         });

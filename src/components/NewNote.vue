@@ -42,12 +42,7 @@
           if (response.status === 401) {
             window.location.href = "/login"
           } else {
-            this.$message({
-              showClose: true,
-              type: 'error',
-              duration: 0,
-              message: '获取笔记本列表失败!'
-            });
+            this.$message.error("获取笔记本列表失败!");
           }
         });
       },
@@ -58,29 +53,18 @@
             noteBookId: this.noteBookId,
             content: this.content
           }, {emulateJSON: true, credentials: true}).then(response => {
-            this.$message({
-              message: '笔记已经成功保存',
-              type: 'success'
-            });
+            this.$message.success("笔记已经成功保存!");
             this.$router.push({path: '/'})
           }, response => {
             if (response.status === 401) {
               window.location.href = "/login"
             } else {
               this.getNoteBookList();
-              this.$message({
-                showClose: true,
-                type: 'error',
-                duration: 0,
-                message: '保存失败!'
-              });
+              this.$message.error("保存失败!");
             }
           });
         } else {
-          this.$message({
-            message: '笔记标题,笔记本,内容都不能空着哦',
-            type: 'warning'
-          });
+          this.$message.warning("笔记标题,笔记本,内容都不能空着哦!");
         }
       }
     },
