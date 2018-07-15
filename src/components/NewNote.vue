@@ -54,7 +54,7 @@
             content: this.content
           }, {emulateJSON: true, credentials: true}).then(response => {
             this.$message.success("笔记已经成功保存!");
-            this.$router.push({path: '/'})
+            window.location.href = "/";
           }, response => {
             if (response.status === 401) {
               window.location.href = "/login"
