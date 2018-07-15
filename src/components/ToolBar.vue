@@ -25,7 +25,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="changeUserProfile">确 定</el-button>
       </div>
     </el-dialog>
   </section>
@@ -75,6 +75,28 @@
             });
           }
         });
+      },
+      changeUserProfile() {
+        if (this.name === '') {
+          this.$message.error('昵称不能为空');
+        } else {
+          this.$http.post(USER().changeUserProfile, {
+            id: localStorage.getItem("login_id"),
+            name: this.name,
+            password: this.password
+          }, {emulateJSON: true, credentials: true}).then(response => {
+            if (response.body.status === 200) {
+              this.$message.success('修改成功');
+              localStorage.setItem("login_name", response.body.data.name);
+              this.getLoginUserInfo();
+              this.dialogFormVisible = false;
+            } else {
+              this.$message.error('修改失败');
+            }
+          }, response => {
+            this.$message.error('修改失败');
+          });
+        }
       }
     },
     mounted() {

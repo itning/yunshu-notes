@@ -28,7 +28,8 @@ export function USER() {
     "getLoginUser": BASE_URL + '/getLoginUser',
     "getCode": BASE_URL + '/get_code?email=',
     "getVCode": BASE_URL + '/forget_get_code?email=',
-    "forgetPassword": BASE_URL + '/forget_password'
+    "forgetPassword": BASE_URL + '/forget_password',
+    "changeUserProfile": BASE_URL + '/change_user_profile'
   }
 }
 
