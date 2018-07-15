@@ -155,17 +155,30 @@
       },
       getVCode() {
         this.getCode = false;
-        this.inputCode = true;
+        this.code_msg = "重新获取";
         this.$http.get(USER().getCode + "?email=" + this.reg.username, {credentials: true}).then(response => {
-          this.code_msg = "重新获取";
+          this.$message({
+            message: '验证码已经成功发送!',
+            type: 'success'
+          });
+          this.inputCode = true;
           this.getCode = true;
         }, response => {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            duration: 0,
-            message: '邮件发送失败!'
-          });
+          if (response.status === 406) {
+            this.$message({
+              showClose: true,
+              type: 'error',
+              duration: 0,
+              message: '该邮箱已经被注册!'
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              type: 'error',
+              duration: 0,
+              message: '邮件发送失败!'
+            });
+          }
           this.getCode = true;
         });
       }
