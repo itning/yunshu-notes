@@ -4,6 +4,10 @@
 >
 > 云笔记使用大数据成熟的分布式存储解决方案，解决了传统笔记数据日益膨胀，数据丢失等问题。云笔记通过数据分析、用户画像等技术实现，能够通过精准推送其他人公开分享的云笔记来达到扩充用户知识行囊的目的，并且通过独立的账户安全体系来达到笔记安全私有化,保证用户独立的空间。且分布式存储可以达到用户笔记空间无限大,笔记平台响应式，满足用户不同平台办公的需求。
 
+[后端项目地址:https://github.com/itning/yunshu-notes-r](https://github.com/itning/yunshu-notes-r)
+
+
+
 [![GitHub stars](https://img.shields.io/github/stars/itning/yunshu-notes.svg?style=social&label=Stars)]()
 [![GitHub forks](https://img.shields.io/github/forks/itning/yunshu-notes.svg?style=social&label=Fork)]()
 [![GitHub watchers](https://img.shields.io/github/watchers/itning/yunshu-notes.svg?style=social&label=Watch)]()
