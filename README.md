@@ -6,12 +6,18 @@
 
 [后端项目地址:https://github.com/itning/yunshu-notes-r](https://github.com/itning/yunshu-notes-r)
 
+[![GitHub stars](https://img.shields.io/github/stars/itning/yunshu-notes.svg?style=social&label=Stars)](https://github.com/itning/yunshu-notes/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/itning/yunshu-notes.svg?style=social&label=Fork)](https://github.com/itning/yunshu-notes/network/members)
+[![GitHub watchers](https://img.shields.io/github/watchers/itning/yunshu-notes.svg?style=social&label=Watch)](https://github.com/itning/yunshu-notes/watchers)
+[![GitHub followers](https://img.shields.io/github/followers/itning.svg?style=social&label=Follow)](https://github.com/itning?tab=followers)
 
-
-[![GitHub stars](https://img.shields.io/github/stars/itning/yunshu-notes.svg?style=social&label=Stars)]()
-[![GitHub forks](https://img.shields.io/github/forks/itning/yunshu-notes.svg?style=social&label=Fork)]()
-[![GitHub watchers](https://img.shields.io/github/watchers/itning/yunshu-notes.svg?style=social&label=Watch)]()
-[![GitHub followers](https://img.shields.io/github/followers/itning.svg?style=social&label=Follow)]()
+[![GitHub issues](https://img.shields.io/github/issues/itning/yunshu-notes.svg)](https://github.com/itning/yunshu-notes/issues)
+[![GitHub license](https://img.shields.io/github/license/itning/yunshu-notes.svg)](https://github.com/itning/yunshu-notes/blob/master/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/itning/yunshu-notes.svg)](https://github.com/itning/yunshu-notes/commits)
+[![GitHub release](https://img.shields.io/github/release/itning/yunshu-notes.svg)](https://github.com/itning/yunshu-notes/releases)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/itning/yunshu-notes.svg)](https://github.com/itning/yunshu-notes)
+[![HitCount](http://hits.dwyl.io/itning/yunshu-notes.svg)](http://hits.dwyl.io/itning/yunshu-notes)
+[![language](https://img.shields.io/badge/language-Vue-green.svg)](https://github.com/itning/yunshu-notes)
 
 ## 构建步骤
 
